@@ -1,18 +1,21 @@
-function startTimer(duration, display){
-    var timer = duration, minutes, seconds;
+function startTimer(duration, display, startButton) {
+    startButton.addEventListener('click', function () {
+        var timer = duration;
+        var minutes, seconds;
 
-    setInterval(function(){
+        var interval = setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
 
-        minutes = parseInt(timer /60, 10);
-        seconds = parseInt(timer %60, 10);
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
 
-        minutes = minutes <10 ?"0" + minutes : minutes;
-        seconds = seconds <10 ? "0" + seconds : seconds;
+            display.textContent = minutes + ":" + seconds;
 
-        display.textContent = minutes + ":" + seconds;
-       
-        if(--timer < 0){
-            timer = duration
-        }
-    }, 1000);
+            if (--timer < 0) {
+                clearInterval(interval);
+                timer = duration;
+            }
+        }, 1000);
+    });
 }
